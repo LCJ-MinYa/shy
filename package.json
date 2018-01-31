@@ -17,6 +17,7 @@
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.2",
 		"iconv-lite": "^0.4.19",
+		"mongoose": "^5.0.2",
 		"request": "^2.83.0"
 	}
 }
