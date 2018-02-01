@@ -21,7 +21,9 @@ function getDownLoadUrl() {
 function GoDownLoad() {
 	getDownLoadUrl().then((result) => {
 		for (let i = 0; i < result.length; i++) {
-			request(result[i].torrent).pipe(fs.createWriteStream(__dirname + '/download/' + result[i].name + '.torrent'));
+			request(result[i].torrent).pipe(fs.createWriteStream(__dirname + '/download/' + Math.floor(Math.random() * 100000) + '.torrent'));
 		}
 	})
 }
+
+GoDownLoad();
