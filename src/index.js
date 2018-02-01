@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import {
 	getHttpReq
 } from './utils/httpRequest';
-import Shy from './model/shy.server.module';
+import Shy from './model/asiaNoCode.server.module';
 
 async function requestPageNum() {
 	for (let i = 1; i <= config.pageNum; i++) {

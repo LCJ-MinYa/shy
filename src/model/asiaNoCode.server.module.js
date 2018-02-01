@@ -15,4 +15,4 @@ let ShySchema = new mongoose.Schema({
 	}
 })
 
-export default mongoose.model('Shy', ShySchema, 'Shy');
+export default mongoose.model('AsiaNoCode', ShySchema, 'AsiaNoCode');
