@@ -3,12 +3,14 @@ import request from 'request';
 import mongoose from 'mongoose';
 import config from './config/config';
 import asiaNoCode from './model/asiaNoCode.server.module';
+import chineseSubtitles from './model/chineseSubtitles.server.module';
+import animeDownload from './model/animeDownload.server.module';
 
 let startNum = 0;
 
 function getDownLoadUrl() {
 	return new Promise((resolve, reject) => {
-		asiaNoCode.find({}, (err, result) => {
+		animeDownload.find({}, (err, result) => {
 			if (err) {
 				reject(err);
 			} else {

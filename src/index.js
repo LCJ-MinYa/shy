@@ -5,6 +5,7 @@ import {
 } from './utils/httpRequest';
 import asiaNoCode from './model/asiaNoCode.server.module';
 import chineseSubtitles from './model/chineseSubtitles.server.module';
+import animeDownload from './model/animeDownload.server.module';
 
 async function requestPageNum() {
 	try {
@@ -107,6 +108,9 @@ function shyInsert(content, i, pageNum) {
 				break;
 			case 2:
 				shyData = new chineseSubtitles(content);
+				break;
+			case 7:
+				shyData = new animeDownload(content);
 				break;
 		}
 		shyData.save((err) => {
