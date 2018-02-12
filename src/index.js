@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 import {
 	getHttpReq
 } from './utils/httpRequest';
-import Shy from './model/asiaNoCode.server.module';
+import asiaNoCode from './model/asiaNoCode.server.module';
+import chineseSubtitles from './model/chineseSubtitles.server.module';
 
 async function requestPageNum() {
 	try {
@@ -99,7 +100,15 @@ function saveShyData(path, i, pageNum) {
 
 function shyInsert(content, i, pageNum) {
 	return new Promise((resolve, reject) => {
-		let shyData = new Shy(content);
+		let shyData;
+		switch (config.type) {
+			case 0:
+				shyData = new asiaNoCode(content);
+				break;
+			case 2:
+				shyData = new chineseSubtitles(content);
+				break;
+		}
 		shyData.save((err) => {
 			if (err) {
 				console.log('存储第' + pageNum + '页第' + (i + 1) + '条数据失败');
