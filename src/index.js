@@ -6,16 +6,20 @@ import {
 import Shy from './model/asiaNoCode.server.module';
 
 async function requestPageNum() {
-	for (let i = 1; i <= config.pageNum; i++) {
-		await requestPageLine(i);
+	try {
+		for (let i = 1; i <= config.pageNum[config.type]; i++) {
+			await requestPageLine(i);
+		}
+		mongoose.disconnect();
+	} catch (e) {
+		console.log(e);
 	}
-	mongoose.disconnect();
 }
 
 function requestPageLine(pageNum) {
 	return new Promise((resolve, reject) => {
 		let pathArray = [];
-		let url = config.url + config.path;
+		let url = config.url + config.path[config.type];
 		if (pageNum !== 1) {
 			url += '/p_' + pageNum + '.html';
 		}
@@ -23,7 +27,7 @@ function requestPageLine(pageNum) {
 			.then(($) => {
 				$('div.list ul li').map((i, el) => {
 					let shyUrlDetail = $(el).children('a').attr('href');
-					if (shyUrlDetail.indexOf('/xz/31') > -1) {
+					if (shyUrlDetail.indexOf(config.path[config.type]) > -1) {
 						pathArray.push($(el).children('a').attr('href'));
 					}
 				})
@@ -46,15 +50,19 @@ function requestPageLine(pageNum) {
 }
 
 async function requestDetailPage(pathArray, pageNum) {
-	let lastPromise;
-	for (let i = 0; i < pathArray.length; i++) {
-		if (i == pathArray.length - 1) {
-			lastPromise = await saveShyData(pathArray[i], i, pageNum);
-		} else {
-			await saveShyData(pathArray[i], i, pageNum);
+	try {
+		let lastPromise;
+		for (let i = 0; i < pathArray.length; i++) {
+			if (i == pathArray.length - 1) {
+				lastPromise = await saveShyData(pathArray[i], i, pageNum);
+			} else {
+				await saveShyData(pathArray[i], i, pageNum);
+			}
 		}
+		return lastPromise;
+	} catch (e) {
+		console.log(e);
 	}
-	return lastPromise;
 }
 
 function saveShyData(path, i, pageNum) {
